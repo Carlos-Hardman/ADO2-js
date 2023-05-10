@@ -83,6 +83,7 @@ class Nota {
     toString() {
         return `nota = ${this.nota}, peso = ${this.peso}`;
     }
+	
 }
 
 /**
@@ -95,6 +96,7 @@ class Nota {
  * A presença é um inteiro entre 0 e 100 representando a porcentagem de comparecimento às aulas.
  */
 class AlunoMatricula {
+
 
     // EXERCÍCIO 5.
     /**
@@ -129,8 +131,14 @@ class AlunoMatricula {
      * @throw TypeError Se qualquer parâmetro for do tipo errado.
      * @throw RangeError Se o valor de qualquer parâmetro não for aceitável.
      */
-    constructor(nome, genero, disciplina, ados, presenca) {
-        naoFizIssoAinda();
+    constructor(nome, genero, disciplina, ados, presenca, t) {
+         this.nome = nome;
+		this.genero = genero;
+		this. disciplina = disciplina;
+		this.ados = ados;
+		this.presenca = presenca;
+		
+		
     }
 
     // EXERCÍCIO 6.
