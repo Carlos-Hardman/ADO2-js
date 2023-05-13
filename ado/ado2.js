@@ -48,20 +48,27 @@ class Nota {
      * @param {number} peso O peso da nota, entre 0 a 10, na composição total da nota semestral.
      */
     #verificar(valor, peso) {
-       const ovalor = determinarTipo2(valor);
-		 const opeso = determinarTipo2(peso);
+        const ovalor = determinarTipo2(valor);
+        const opeso = determinarTipo2(peso);
 
-  if (ovalor !== 'number' || opeso !== 'number') {
-    throw new TypeError('A nota e o peso devem ser numéricos.');
-  }
+        if (ovalor !== 'number' || opeso !== 'number') {
+            throw new TypeError('A nota e o peso devem ser numéricos.');
+        }
 
-  if (valor < 0 || valor > 10 || peso < 0 || peso > 10) {
-    throw new RangeError('A nota e o peso devem ser um número entre 0 e 10.');
-  }
+        if (valor < 0 || valor > 10 || peso < 0 || peso > 10) {
+            throw new RangeError('A nota e o peso devem ser um número entre 0 e 10.');
+        }
     }
 
     // EXERCÍCIO 2.
     // Crie os métodos getters necessários de todos os parâmetros recebidos no construtor aqui.
+     get valor() {
+      return this.#valor;
+    }
+     get peso() {
+        return this.#peso;
+    }
+
 
 
     // EXERCÍCIO 3.
@@ -131,7 +138,7 @@ class AlunoMatricula {
      * @throw TypeError Se qualquer parâmetro for do tipo errado.
      * @throw RangeError Se o valor de qualquer parâmetro não for aceitável.
      */
-    constructor(nome, genero, disciplina, ados, presenca, t) {
+    constructor(nome, genero, disciplina, ados, presenca, ) {
          this.nome = nome;
 		this.genero = genero;
 		this. disciplina = disciplina;
@@ -144,6 +151,7 @@ class AlunoMatricula {
     // EXERCÍCIO 6.
     // Crie os métodos getters necessários de todos os parâmetros recebidos no construtor aqui.
 
+    
     // EXERCÍCIO 7.
     /**
      * Este método calcula a nota final do(a) aluno(a) na disciplina.
@@ -325,15 +333,22 @@ function verificarAlunoMatriculado() {
 
 class Circulo {
 	
+    
   constructor(raio) {
-    if (typeof raio !== 'number') throw new TypeError('O raio deve ser um número');
+    if (typeof raio !== 'number' || isNaN(raio)|| !isFinite(raio)) throw new TypeError('O raio deve ser um número');
     if (raio < 0) throw new RangeError('O raio não pode ser negativo');
     this._raio = raio;
+    
+    
   }
+
 
   get raio() { return this._raio; }
   get diametro() { return this._raio * 2; }
   get area() { return Math.PI * this._raio ** 2; }
   get circunferencia() { return 2 * Math.PI * this._raio; }
   
+  
 }
+
+
