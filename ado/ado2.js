@@ -53,7 +53,7 @@ class Nota {
 
         if (ovalor !== 'number' || opeso !== 'number') {
             throw new TypeError('A nota e o peso devem ser numéricos.');
-        }
+        	}
 
         if (valor < 0 || valor > 10 || peso < 0 || peso > 10) {
             throw new RangeError('A nota e o peso devem ser um número entre 0 e 10.');
