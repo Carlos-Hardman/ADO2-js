@@ -77,8 +77,12 @@ class Nota {
      * @returns {number} O valor ponderado desta nota.
      */
     get notaPonderada() {
-        naoFizIssoAinda();
-    }
+		
+		const resultado = this.#valor * this.#peso /10; 
+		 return resultado;
+		
+		
+	}
 
     // EXERCÍCIO 4.
     /**
@@ -88,10 +92,15 @@ class Nota {
      * @returns {String} A representação string deste objeto.
      */
     toString() {
-        return `nota = ${this.nota}, peso = ${this.peso}`;
+       return `nota = ${this.#valor}, peso = ${this.#peso}`;
+	   
+		
+		
     }
 	
 }
+
+
 
 /**
  * A classe AlunoMatricula representa os dados de um(a) aluno(a) matriculado(a) em alguma disciplina.
@@ -141,16 +150,40 @@ class AlunoMatricula {
     constructor(nome, genero, disciplina, ados, presenca, ) {
          this.nome = nome;
 		this.genero = genero;
+          
 		this. disciplina = disciplina;
 		this.ados = ados;
 		this.presenca = presenca;
+		
+		
+		 
 		
 		
     }
 
     // EXERCÍCIO 6.
     // Crie os métodos getters necessários de todos os parâmetros recebidos no construtor aqui.
+getnome(){
+	return this.nome;
+}
 
+getgenero(){
+	return this.genero;
+	
+}
+getdisciplina(){
+	return this.disciplina;
+}
+getados(){
+	return this.ados;
+
+}
+getpresenca(){
+	return this.presenca;
+}
+
+
+  
     
     // EXERCÍCIO 7.
     /**
@@ -160,7 +193,7 @@ class AlunoMatricula {
      * @returns {number} A média final do(a) aluno(a) na disciplina.
      */
     get media() {
-        naoFizIssoAinda();
+       naoFizIssoAinda();
     }
 
     // EXERCÍCIO 8.
@@ -178,7 +211,14 @@ class AlunoMatricula {
      * @returns {String} A situação final do(a) aluno(a) na disciplina.
      */
     get situacao() {
-        naoFizIssoAinda();
+		const m = this.media;
+		const p = this.presenca;
+		if (m >=7 && p >=75) return 'AP';
+		if (m >=7 && p < 75) return 'RF';
+		if (m < 7 && p >=75) return 'RM';
+		return 'RMF';
+    
+
     }
 
     // EXERCÍCIO 9.
