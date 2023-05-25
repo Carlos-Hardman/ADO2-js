@@ -113,6 +113,11 @@ class Nota {
  */
 class AlunoMatricula {
 
+	#nome;
+	#genero;
+	#disciplina; 
+	#ados;
+	#presenca;
 
     // EXERCÍCIO 5.
     /**
@@ -147,39 +152,35 @@ class AlunoMatricula {
      * @throw TypeError Se qualquer parâmetro for do tipo errado.
      * @throw RangeError Se o valor de qualquer parâmetro não for aceitável.
      */
-    constructor(nome, genero, disciplina, ados, presenca, ) {
-         this.nome = nome;
-		this.genero = genero;
-          
-		this. disciplina = disciplina;
-		this.ados = ados;
-		this.presenca = presenca;
+    constructor(nome, genero, disciplina, ados, presenca ) {
 		
-		
-		 
-		
+        this.#nome = nome;
+		this.#genero = genero;
+	    this.#disciplina = disciplina;
+	    this.#ados = ados;
+		this.#presenca = presenca;		  
 		
     }
 
     // EXERCÍCIO 6.
     // Crie os métodos getters necessários de todos os parâmetros recebidos no construtor aqui.
-getnome(){
-	return this.nome;
+get nome(){
+	return this.#nome;
 }
 
-getgenero(){
-	return this.genero;
+get genero(){
+	return this.#genero;
 	
 }
-getdisciplina(){
-	return this.disciplina;
+get disciplina(){
+	return this.#disciplina;
 }
-getados(){
-	return this.ados;
+get ados(){
+	return this.#ados;
 
 }
-getpresenca(){
-	return this.presenca;
+get presenca(){
+	return this.#presenca;
 }
 
 
@@ -193,7 +194,12 @@ getpresenca(){
      * @returns {number} A média final do(a) aluno(a) na disciplina.
      */
     get media() {
-       naoFizIssoAinda();
+		const ados = this.ados;
+		let soma = 0;
+		for (let i=0; i<ados.length; i++) {
+			soma += ados[i].notaPonderada;
+		}
+       return soma;
     }
 
     // EXERCÍCIO 8.
