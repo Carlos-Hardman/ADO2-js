@@ -243,7 +243,35 @@ get presenca(){
      * @returns {String} A situação final do(a) aluno(a) na disciplina, escrito por extenso.
      */
     get situacaoPorExtenso() {
-        naoFizIssoAinda();
+        const m = this.media;
+		const p = this.presenca;
+		
+
+    if (m >= 7 && p >= 75) {
+        if (this.genero === 'F') {
+            return 'aprovada';
+        } else {
+            return 'aprovado';
+        }
+    } else if (m >= 7 && p < 75) {
+        if (this.genero === 'F') {
+            return 'reprovada por falta';
+        } else {
+            return 'reprovado por falta';
+        }
+    } else if (m < 7 && p >= 75) {
+        if (this.genero === 'F') {
+            return 'reprovada por média';
+        } else {
+            return 'reprovado por média';
+        }
+    } else if (m < 7 && p < 75) {
+        if (this.genero === 'F') {
+            return 'reprovada por média e falta';
+        } else {
+            return 'reprovado por média e falta';
+        }
+    }
     }
 
     // EXERCÍCIO 10.
