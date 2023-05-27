@@ -6,7 +6,7 @@
  * @return {string[]} Os nomes dos alunos que fizeram este exercício.
  */
 function nomesDosAlunos() {
-    return [ "Carlos Hardman"];
+    return [ "Carlos Alberto Hardman JR",'Elvis Costas','Anthony Stapf'];
 }
 
 /**
@@ -153,22 +153,39 @@ class AlunoMatricula {
      * @throw RangeError Se o valor de qualquer parâmetro não for aceitável.
      */
     constructor(nome, genero, disciplina, ados, presenca ) {
-		if (determinarTipo2(nome) !== "string") throw new TypeError("Nome inválido");
-		if (determinarTipo2(genero) !== "string") throw new TypeError("Gênero inválido");
-		if (genero !== "M" && genero !== "F") throw new RangeError("Gênero inválido");
-		//if (genero !== "teste" && genero !== "teste") throw new RangeError("Gênero inválido");
-		if (determinarTipo2(disciplina) !== "string") throw new TypeError("Disciplina inválida");
-		if (nome.trim() === "") throw new RangeError("Nome inválido");
-		if (disciplina.trim() === "") throw new RangeError("Disciplina inválido");
-		if (!(ados instanceof Array)) throw new TypeError("ADOs inválidas");
-		for (const ado of ados) {
-			if (!(ado instanceof Nota)) throw new TypeError("ADOs inválidas");
+        if (typeof nome !== 'string') {
+			throw new TypeError ('nome inválido '+nome);
 		}
-		let peso = 0;
-		for (const ado of ados) {
-			peso += ado.peso;
+		if (nome.trim().length === 0){
+			throw new RangeError ('nome inválido '+nome);
 		}
-		if (peso !== 10) throw new RangeError("ADOs inválidas");
+			
+		if (typeof genero !== 'string') {
+			throw new TypeError('gênero inválido '+genero);
+		}
+		if(!['M', 'F'].includes(genero)) {
+			throw new RangeError('gênero inválido '+genero);			
+		}
+		if (typeof disciplina !== 'string'){
+			throw new TypeError('a disciplina inválida '+disciplina);
+		}
+		if (disciplina.trim().length === 0) {
+			throw new RangeError('a disciplina inválida '+disciplina);
+		}
+		
+		if (!Array.isArray(ados) || ados.some(nota => !(nota instanceof Nota))) {
+			throw new TypeError('O parâmetro "ados" deve ser um array de objetos da classe "Nota".');
+		}
+		if (ados.reduce((total, nota) => total + nota.peso, 0) !== 10) {
+			throw new RangeError('O peso das notas deve somar 10.');
+		}
+		if (!Number.isFinite(presenca)){
+			throw new TypeError('valor invalido');
+		}
+		if (presenca < 0 || presenca > 100) {
+			throw new RangeError('valor invalido');
+		}
+	
 		
 		
 		
@@ -325,7 +342,8 @@ get presenca(){
      * @returns {String} O status descritivo do(a) aluno(a).
      */
     get status() {
-        naoFizIssoAinda();
+        const genero = this.#genero === "F";
+		return `${this.#nome} tem média ${this.media} na disciplina de ${this.#disciplina} e foi ${this.situacaoPorExtenso} com ${Math.floor(this.#presenca)}% de presença.`;
     }
 }
 
@@ -345,7 +363,23 @@ get presenca(){
  * Coloque esse <li> dentro do <ul> que está dentro da <div> com a classe ex10e11 no ado2.html.
  */
 function criarItemNota() {
-    naoFizIssoAinda();
+    const ul = document.querySelector('.ex11a13 ul'); 
+	const notaId = `nota-${ul.children.length + 1}`; 
+	const pesoId = `peso-${ul.children.length + 1}`; 
+
+	const li = document.createElement('li'); 
+	li.innerHTML = `
+		<div>
+		  <label for="${notaId}">Nota:</label>
+		  <input type="text" id="${notaId}">
+		</div>
+		<div>
+		  <label for="${pesoId}">Peso:</label>
+		  <input type="text" id="${pesoId}">
+		</div> 
+	`;
+
+	ul.appendChild(li); 
 }
 
 // EXERCÍCIO 12.
@@ -354,7 +388,12 @@ function criarItemNota() {
  * Se não houver mais nenhum <li> a ser removido, nada deve ser feito.
  */
 function removerItemNota() {
-    naoFizIssoAinda();
+    const ul = document.querySelector('.ex11a13 ul'); 
+
+  if (ul.children.length > 0) { 
+	const lastLi = ul.children[ul.children.length - 1];
+	ul.removeChild(lastLi); 
+  }
 }
 
 // EXERCÍCIO 13.
@@ -402,25 +441,29 @@ function verificarAlunoMatriculado() {
 
     // Comece a mexer no código daqui para baixo.
     let texto;
-    try {
+	try {
         const nome = lerTexto("o nome do(a) aluno(a)", document.querySelector("#nome").value);
-        const escolheuEle = naoFizIssoAinda();
-        const escolheuEla = naoFizIssoAinda();
+        const escolheuEle = document.querySelector("#ele").checked;
+        const escolheuEla = document.querySelector("#ela").checked;
         if (!escolheuEle && !escolheuEla) throw new Error("Escolha o gênero do(a) aluno(a) corretamente.");
         const genero = escolheuEle ? "M" : "F";
-        const disciplina = naoFizIssoAinda();
+        const disciplina = lerTexto("o nome da disciplina", document.querySelector("#disciplina").value);
         const ados = [];
-        for (const item of document.querySelectorAll(naoFizIssoAinda())) {
-            const nota = lerNota(naoFizIssoAinda());
-            const peso = lerPeso(naoFizIssoAinda());
-            ados.push(new Nota(naoFizIssoAinda()));
+        let somaPesos = 0;
+        for (const item of document.querySelectorAll(".ex11a13 > ul > li")) {
+            const nota = lerNota(item.querySelectorAll("input")[0].value);
+            const peso = lerPeso(item.querySelectorAll("input")[1].value);
+            ados.push(new Nota(nota, peso));
+            somaPesos += peso;
         }
-        const presenca = lerPresenca(naoFizIssoAinda());
-        texto = new AlunoMatricula(naoFizIssoAinda()).status;
+        const presenca = lerPresenca(document.querySelector("#presenca").value);
+
+        const matricula = new AlunoMatricula(nome, genero, disciplina, ados, presenca);
+        texto = matricula.status;
     } catch (e) {
-        texto = naoFizIssoAinda();
+        texto = e.message;
     }
-    document.querySelector("#situacao").innerHTML = naoFizIssoAinda();
+    document.querySelector("#situacao").value = texto;
 }
 
 // EXERCÍCIO 14.
