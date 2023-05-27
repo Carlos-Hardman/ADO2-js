@@ -153,14 +153,41 @@ class AlunoMatricula {
      * @throw RangeError Se o valor de qualquer parâmetro não for aceitável.
      */
     constructor(nome, genero, disciplina, ados, presenca ) {
+		if (determinarTipo2(nome) !== "string") throw new TypeError("Nome inválido");
+		if (determinarTipo2(genero) !== "string") throw new TypeError("Gênero inválido");
+		if (genero !== "M" && genero !== "F") throw new RangeError("Gênero inválido");
+		//if (genero !== "teste" && genero !== "teste") throw new RangeError("Gênero inválido");
+		if (determinarTipo2(disciplina) !== "string") throw new TypeError("Disciplina inválida");
+		if (nome.trim() === "") throw new RangeError("Nome inválido");
+		if (disciplina.trim() === "") throw new RangeError("Disciplina inválido");
+		if (!(ados instanceof Array)) throw new TypeError("ADOs inválidas");
+		for (const ado of ados) {
+			if (!(ado instanceof Nota)) throw new TypeError("ADOs inválidas");
+		}
+		let peso = 0;
+		for (const ado of ados) {
+			peso += ado.peso;
+		}
+		if (peso !== 10) throw new RangeError("ADOs inválidas");
 		
+		
+		
+		
+	
+
+
         this.#nome = nome;
 		this.#genero = genero;
-	    this.#disciplina = disciplina;
+		this.#disciplina = disciplina;
 	    this.#ados = ados;
-		this.#presenca = presenca;		  
+		this.#presenca = presenca;	
+		
+	
 		
     }
+	
+	
+
 
     // EXERCÍCIO 6.
     // Crie os métodos getters necessários de todos os parâmetros recebidos no construtor aqui.
